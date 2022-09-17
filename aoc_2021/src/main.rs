@@ -12,7 +12,8 @@ fn run_day(day: String) {
 
     match day {
         1 => aoc_2021::day01::run(),
-        n if n > 1 && n < 25 => unimplemented!(),
+        2 => aoc_2021::day02::run(),
+        n if n >= 1 && n <= 25 => unimplemented!(),
         _ => eprintln!("Received invalid date range, (1 <= day <= 25)"),
     }
 }
