@@ -14,6 +14,6 @@ fn run_day(day: String) {
         1 => aoc_2021::day1::run(),
         2 => aoc_2021::day2::run(),
         3 => aoc_2021::day3::run(),
-        _ => eprintln!("Received invalid date range, (1 <= day <= 25)"),
+        _ => eprintln!("Received invalid date range, range should be (1 <= day <= 25)"),
     }
 }
