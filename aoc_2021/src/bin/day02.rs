@@ -1,4 +1,4 @@
-pub fn run() {
+pub fn main() {
     println!("Part 1: {}", part_1());
     println!("Part 2: {}", part_2());
 }

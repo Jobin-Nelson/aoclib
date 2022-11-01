@@ -9,7 +9,3 @@ where
         .filter_map(|line| line.parse::<T>().ok())
         .collect())
 }
-
-pub mod day1;
-pub mod day2;
-pub mod day3;

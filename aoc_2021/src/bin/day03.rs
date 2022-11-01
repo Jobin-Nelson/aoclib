@@ -1,4 +1,4 @@
-pub fn run() {
+pub fn main() {
     let size = 32;
     let lines: Vec<Vec<u32>> = std::fs::read_to_string("data/3.txt")
         .unwrap()
