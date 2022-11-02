@@ -4,7 +4,7 @@ pub fn main() {
 }
 
 fn run_part(size: usize) -> Result<usize, std::io::Error> {
-    Ok(aoc_2021::read_one_per_line::<i32>("data/1.txt")?
+    Ok(aoc_2021::read_one_per_line::<i32>("data/day01.txt")?
         .windows(size)
         .filter(|win| win[0] < win[size - 1])
         .collect::<Vec<_>>()

@@ -1,6 +1,6 @@
 pub fn main() {
     let size = 32;
-    let lines: Vec<Vec<u32>> = std::fs::read_to_string("data/3.txt")
+    let lines: Vec<Vec<u32>> = std::fs::read_to_string("data/day03.txt")
         .unwrap()
         .lines()
         .map(|line| {

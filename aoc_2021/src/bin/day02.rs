@@ -4,7 +4,7 @@ pub fn main() {
 }
 
 fn part_1() -> i32 {
-    let input = std::fs::read_to_string("data/2.txt").unwrap();
+    let input = std::fs::read_to_string("data/day02.txt").unwrap();
     let (horizontal, depth) = input.split("\n").fold((0, 0), |acc, n| {
         if let Some((direction, magnitude)) = n.split_once(' ') {
             let magnitude = magnitude.parse::<i32>().unwrap();
@@ -22,7 +22,7 @@ fn part_1() -> i32 {
 }
 
 fn part_2() -> i32 {
-    let input = std::fs::read_to_string("data/2.txt").unwrap();
+    let input = std::fs::read_to_string("data/day02.txt").unwrap();
     let (horizontal, depth, _) = input.split('\n').fold((0, 0, 0), |acc, n| {
         if let Some((direction, magnitude)) = n.split_once(' ') {
             let magnitude = magnitude.parse::<i32>().unwrap();
