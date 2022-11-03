@@ -3,7 +3,7 @@ use std::str::Lines;
 
 #[derive(Debug, Clone)]
 struct Board {
-    sets: Vec<HashSet<u32>>
+    sets: Vec<HashSet<u32>>,
 }
 
 impl Board {
@@ -17,7 +17,11 @@ impl Board {
 
         let rows: Vec<Vec<u32>> = lines
             .take(5)
-            .map(|l| l.split_whitespace().map(|i| i.parse::<u32>().unwrap()).collect())
+            .map(|l| {
+                l.split_whitespace()
+                    .map(|i| i.parse::<u32>().unwrap())
+                    .collect()
+            })
             .collect();
 
         for col in 0..5 {

@@ -7,9 +7,9 @@ set -euo pipefail
 
 shopt -s extglob
 
-
 SCRIPT=$(readlink --canonicalize-existing "$0")
 SCRIPT_PATH=$(dirname ${SCRIPT})
+echo $SCRIPT_PATH
 
 [[ -s "${SCRIPT_PATH}/.env" ]] && . "${SCRIPT_PATH}/.env"
 
@@ -19,19 +19,20 @@ if [[ -z $AOC_SESSION ]]; then
 fi
 
 generate_day() {
-    local day=${1}
-    printf -v day "%02d" $day
+    local day=${1##+0}
+    printf -v zfill_day "%02d" $day
 
-    if [[ -f "aoc_2021/src/day${day}.rs" ]]; then
-        echo "File day${day}.rs already exists"
+    if [[ -f "${SCRIPT_PATH}/aoc_2021/src/bin/day${zfill_day}.rs" ]]; then
+        echo "File day${zfill_day}.rs already exists"
         exit 1
     fi
 
-    echo "Downloading day ${day} input file"
-    curl -# -s "https://adventofcode.com/2021/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "aoc_2021/data/${day}.txt"
+    echo "Downloading day ${day} input file..."
+    curl -# -s "https://adventofcode.com/2021/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "${SCRIPT_PATH}/aoc_2021/data/day${zfill_day}.txt"
+    echo "Input file stored in data/day${zfill_day}.txt"
 
-    touch "aoc_2021/src/day${day}.rs"
-    echo "Created File day${day}.rs"
+    touch "${SCRIPT_PATH}/aoc_2021/src/bin/day${zfill_day}.rs"
+    echo "Created File day${zfill_day}.rs"
 }
 
 help() {
