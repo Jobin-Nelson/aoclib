@@ -5,7 +5,7 @@ pub fn main() {
 
 fn part_1() -> i32 {
     let input = std::fs::read_to_string("data/day02.txt").unwrap();
-    let (horizontal, depth) = input.split("\n").fold((0, 0), |acc, n| {
+    let (horizontal, depth) = input.split('\n').fold((0, 0), |acc, n| {
         if let Some((direction, magnitude)) = n.split_once(' ') {
             let magnitude = magnitude.parse::<i32>().unwrap();
             match direction {

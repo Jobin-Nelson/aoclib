@@ -2,7 +2,7 @@ fn main() {
     let input = std::fs::read_to_string("data/day07.txt").unwrap();
     let mut submarines: Vec<i32> = input
         .trim_end()
-        .split(",")
+        .split(',')
         .map(|i| i.parse().unwrap())
         .collect();
 

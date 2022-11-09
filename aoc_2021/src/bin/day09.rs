@@ -77,7 +77,7 @@ fn main() {
 
     for l in lines {
         for c in l.chars() {
-            grid.push(c as u8 - '0' as u8);
+            grid.push(c as u8 - b'0');
         }
     }
 

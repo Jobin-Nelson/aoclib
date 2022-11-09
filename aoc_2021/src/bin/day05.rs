@@ -7,7 +7,7 @@ impl FromStr for Position {
     type Err = ParseIntError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let (x, y) = s.split_once(",").unwrap();
+        let (x, y) = s.split_once(',').unwrap();
         Ok(Position(x.parse()?, y.parse()?))
     }
 }
@@ -37,7 +37,7 @@ fn main() {
     println!("Part 2: {}", get_dangerous_counts(&lines, true));
 }
 
-fn get_dangerous_counts(lines: &Vec<Line>, diagonal: bool) -> u32 {
+fn get_dangerous_counts(lines: &[Line], diagonal: bool) -> u32 {
     let mut counts: HashMap<Position, u32> = HashMap::new();
 
     lines.iter().for_each(|item| {

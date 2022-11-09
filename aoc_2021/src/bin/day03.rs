@@ -24,7 +24,7 @@ pub fn main() {
         .into_iter()
         .map(|d| if d > half { 1 } else { 0 })
         .fold(0, |acc, digit| (acc << 1) + digit);
-    let epsilon: u32 = !gamma << size - digits >> size - digits;
+    let epsilon: u32 = !gamma << (size - digits) >> (size - digits);
 
     let filter_vals = |f: fn(u32, u32) -> bool| {
         let mut values = lines.clone();
@@ -35,10 +35,7 @@ pub fn main() {
             let oxygen_sum = line_values.iter().sum::<u32>();
             let most_common = if oxygen_sum < oxygen_half { 0 } else { 1 };
 
-            values = values
-                .into_iter()
-                .filter(|value| f(value[idx], most_common))
-                .collect();
+            values.retain(|value| f(value[idx], most_common));
 
             if values.len() == 1 {
                 break;

@@ -11,7 +11,7 @@ impl Board {
         let mut sets: Vec<HashSet<u32>> = Vec::new();
 
         let empty = lines.next()?;
-        if empty != "" {
+        if !empty.is_empty() {
             panic!("Didn't encounter empty line");
         }
 
@@ -26,8 +26,8 @@ impl Board {
 
         for col in 0..5 {
             let mut set = HashSet::new();
-            for row in 0..5 {
-                set.insert(rows[row][col]);
+            for row in rows.iter().take(5) {
+                set.insert(row[col]);
             }
             sets.push(set);
         }
@@ -64,7 +64,7 @@ fn main() {
     let moves: Vec<u32> = lines
         .next()
         .unwrap()
-        .split(",")
+        .split(',')
         .map(|i| i.parse::<u32>().unwrap())
         .collect();
 
