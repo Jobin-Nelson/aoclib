@@ -10,10 +10,10 @@ fn main() {
     println!("Part 1: {}", get_count(&input, 256));
 }
 
-fn get_count(fishes: &Vec<usize>,days: u32) -> u64 {
+fn get_count(fishes: &Vec<usize>, days: u32) -> u64 {
     let mut count = VecDeque::from(vec![0; 9]);
     fishes.iter().for_each(|i| count[*i] += 1);
-    
+
     for _ in 0..days {
         let new_fishes = count.pop_front().unwrap();
         count[6] += new_fishes;

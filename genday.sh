@@ -8,8 +8,8 @@ set -euo pipefail
 shopt -s extglob
 
 SCRIPT=$(readlink --canonicalize-existing "$0")
-SCRIPT_PATH=$(dirname ${SCRIPT})
-echo $SCRIPT_PATH
+SCRIPT_PATH=$(dirname "${SCRIPT}")
+echo "$SCRIPT_PATH"
 
 [[ -s "${SCRIPT_PATH}/.env" ]] && . "${SCRIPT_PATH}/.env"
 
@@ -20,7 +20,7 @@ fi
 
 generate_day() {
     local day=${1##+0}
-    printf -v zfill_day "%02d" $day
+    printf -v zfill_day "%02d" "$day"
 
     if [[ -f "${SCRIPT_PATH}/aoc_2021/src/bin/day${zfill_day}.rs" ]]; then
         echo "File day${zfill_day}.rs already exists"
@@ -48,7 +48,7 @@ help() {
 
 while getopts "h" option; do
     case $option in
-        h | --help) 
+        h) 
             help
             exit 0;;
         \?)
@@ -59,5 +59,5 @@ done
 
 [[ -z "$1" ]] && { echo "Pass in a day";exit 1; }
 
-generate_day $1
+generate_day "$1"
 
