@@ -18,7 +18,7 @@ if [[ -z $AOC_SESSION ]]; then
     exit 1
 fi
 
-generate_day() {
+function generate_day() {
     local day=${1##+0}
     printf -v zfill_day "%02d" "$day"
 
@@ -35,7 +35,7 @@ generate_day() {
     echo "Created File day${zfill_day}.rs"
 }
 
-help() {
+function help() {
     echo
     echo "Setups up everything  for the given day"
     echo
