@@ -6,7 +6,8 @@ trait BitReader {
 
 impl BitReader for Iter<'_, u8> {
     fn bits_to_num(&mut self, count: usize) -> u64 {
-        self.take(count).fold(0, |acc, bit| (acc << 1) | *bit as u64)
+        self.take(count)
+            .fold(0, |acc, bit| (acc << 1) | *bit as u64)
     }
 }
 

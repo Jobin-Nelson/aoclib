@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # To adapt this script to the new year you are working on
-# sed -i -e 's/aoc_{old_year}/aoc_{new_year}/g' -e 's/{old_yearl}/{new_year}/g' ./genday.sh
+# sed -i -e 's/aoc_{old_year}/aoc_{new_year}/g;s/{old_yearl}/{new_year}/g' genday.sh
 
 set -euo pipefail
 
@@ -13,6 +13,11 @@ echo "$SCRIPT_PATH"
 
 [[ -s "${SCRIPT_PATH}/.env" ]] && . "${SCRIPT_PATH}/.env"
 
+if ! [[ -d "${SCRIPT_PATH}/aoc_2022" ]]; then
+    echo "No aoc_2022 crate found"
+    exit 1
+fi
+
 if [[ -z $AOC_SESSION ]]; then
     echo "No AOC_SESSION api key found"
     exit 1
@@ -22,16 +27,17 @@ function generate_day() {
     local day=${1##+0}
     printf -v zfill_day "%02d" "$day"
 
-    if [[ -f "${SCRIPT_PATH}/aoc_2021/src/bin/day${zfill_day}.rs" ]]; then
+    if [[ -f "${SCRIPT_PATH}/aoc_2022/src/bin/day${zfill_day}.rs" ]]; then
         echo "File day${zfill_day}.rs already exists"
         exit 1
     fi
 
     echo "Downloading day ${day} input file..."
-    curl -# -s "https://adventofcode.com/2021/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "${SCRIPT_PATH}/aoc_2021/data/day${zfill_day}.txt"
+    mkdir -p "${SCRIPT_PATH}/aoc_2022/data"
+    curl -# -s "https://adventofcode.com/2022/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "${SCRIPT_PATH}/aoc_2022/data/day${zfill_day}.txt"
     echo "Input file stored in data/day${zfill_day}.txt"
 
-    touch "${SCRIPT_PATH}/aoc_2021/src/bin/day${zfill_day}.rs"
+    touch "${SCRIPT_PATH}/aoc_2022/src/bin/day${zfill_day}.rs"
     echo "Created File day${zfill_day}.rs"
 }
 

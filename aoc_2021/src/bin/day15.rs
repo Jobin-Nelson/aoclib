@@ -22,10 +22,7 @@ struct AStar {
 
 pub fn main() {
     let input = std::fs::read_to_string("data/day15.txt").unwrap();
-    let lines: Vec<String> = input
-        .lines()
-        .map(|l| l.to_string())
-        .collect();
+    let lines: Vec<String> = input.lines().map(|l| l.to_string()).collect();
 
     let mut dijkstra = build_part_1(&lines);
     println!("Part 1: {}", dijkstra_search(&mut dijkstra));
@@ -172,4 +169,3 @@ fn build_part_2(lines: &[String]) -> AStar {
         f_score,
     }
 }
-
