@@ -9,7 +9,6 @@ shopt -s extglob
 
 SCRIPT=$(readlink --canonicalize-existing "$0")
 SCRIPT_PATH=$(dirname "${SCRIPT}")
-echo "$SCRIPT_PATH"
 
 [[ -s "${SCRIPT_PATH}/.env" ]] && . "${SCRIPT_PATH}/.env"
 
@@ -25,37 +24,67 @@ fi
 
 function generate_day() {
     local day=${1##+0}
+
+    if (( day <= 0 || day > 25 )); then
+        echo "Invalid date provided = $day"
+        echo "Date must be between 1 and 25 inclusive"
+        exit 1
+    fi
+
     printf -v zfill_day "%02d" "$day"
 
-    if [[ -f "${SCRIPT_PATH}/aoc_2022/src/bin/day${zfill_day}.rs" ]]; then
-        echo "File day${zfill_day}.rs already exists"
+    local day_path="${SCRIPT_PATH}/aoc_2022/data/day${zfill_day}.txt"
+
+    if [[ -f $day_path ]]; then
+        echo "File day${zfill_day}.txt already exists"
         exit 1
     fi
 
     echo "Downloading day ${day} input file..."
     mkdir -p "${SCRIPT_PATH}/aoc_2022/data"
-    curl -# -s "https://adventofcode.com/2022/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "${SCRIPT_PATH}/aoc_2022/data/day${zfill_day}.txt"
-    echo "Input file stored in data/day${zfill_day}.txt"
+    curl -# -s "https://adventofcode.com/2022/day/${day}/input"  --cookie "session=${AOC_SESSION}" -o "$day_path"
+    echo "Input file stored in $day_path"
+}
 
-    touch "${SCRIPT_PATH}/aoc_2022/src/bin/day${zfill_day}.rs"
-    echo "Created File day${zfill_day}.rs"
+function remove() {
+    local day=${1##+0}
+
+    if (( day <= 0 || day > 25 )); then
+        echo "Invalid date provided = $day"
+        echo "Date must be between 1 and 25 inclusive"
+        exit 1
+    fi
+
+    printf -v zfill_day "%02d" "$day"
+
+    local day_path="${SCRIPT_PATH}/aoc_2022/data/day${zfill_day}.txt" 
+
+    if [[ -f $day_path ]];then
+        rm "$day_path"
+    fi
+
+    echo "File removed for day = $day"
 }
 
 function help() {
     echo
     echo "Setups up everything  for the given day"
     echo
-    echo "Usage: genday.sh day [-h]"
+    echo "Usage: genday.sh day [-h] [-d]"
     echo "Options:"
-    echo "h     Print this help"
     echo "day   Download and setup files for that day"
+    echo "h     Print this help"
+    echo "d     Delete the input file for that day"
     echo
 }
 
-while getopts "h" option; do
+while getopts "hd:" option; do
     case $option in
         h) 
             help
+            exit 0;;
+        d)
+            remove "$OPTARG"
             exit 0;;
         \?)
             echo "Error: Invalid option"

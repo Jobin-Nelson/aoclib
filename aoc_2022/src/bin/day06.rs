@@ -8,7 +8,7 @@ fn main() {
     println!("Part 2: {}", find_marker(&data_stream, 14).unwrap());
 }
 
-fn find_marker(stream: &Vec<char>, distinct_num: usize) -> Option<usize> {
+fn find_marker(stream: &[char], distinct_num: usize) -> Option<usize> {
     for (i, w) in stream.windows(distinct_num).enumerate() {
         let unique: HashSet<&char> = HashSet::from_iter(w);
         if unique.len() == distinct_num {
