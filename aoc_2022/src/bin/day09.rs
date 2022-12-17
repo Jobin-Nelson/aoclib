@@ -22,9 +22,8 @@ impl Rope {
             self.seg[0].1 += delta.1;
 
             for i in 1..self.seg.len() {
-                let row_diff = self.seg[i-1].0 - self.seg[i].0;
-                let col_diff = self.seg[i-1].1 - self.seg[i].1;
-            
+                let row_diff = self.seg[i - 1].0 - self.seg[i].0;
+                let col_diff = self.seg[i - 1].1 - self.seg[i].1;
 
                 if row_diff.abs() > 1 || col_diff.abs() > 1 {
                     self.seg[i].0 += row_diff.signum();
