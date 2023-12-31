@@ -1,0 +1,62 @@
+# GO
+
+<!--toc:start-->
+- [GO](#go)
+  - [Main Points](#main-points)
+  - [Default values](#default-values)
+  - [Variable attributes](#variable-attributes)
+  - [References](#references)
+<!--toc:end-->
+
+## Main Points
+
+1 Statically typed
+2 Strongly typed
+3 Go is compiled
+4 Fast compile Time
+5 Built in concurrency (goroutines)
+6 Simplicity
+
+## Default values
+
+- int, float, rune = 0
+- string = ''
+- bool = false
+- error = nil
+
+## Variable attributes
+
+- `const` cannot be reassigned
+
+## Type assertion
+
+```go
+type shape interface {
+    area() float64
+}
+type circle struct {
+    radius float64
+}
+c, ok := s.(circle)
+```
+
+## GOB encoding
+
+- GOB encoding protocol is specific to GO
+- One of the main scenarios that uses GOB encoding is the net RPC protocol implemented within the go standard library
+
+## References
+
+- [Go Documentation](https://go.dev/doc/)
+- [Go by Example](https://gobyexample.com/)
+- [Effective Go](https://go.dev/doc/effective_go)
+- [Go Learn](https://go.dev/learn/)
+- [Go Playground](https://go.dev/tour/welcome/4)
+- [Building an awesome cli app in go oscon](https://spf13.com/presentation/building-an-awesome-cli-app-in-go-oscon/)
+- [Learn web programming in Go by Examples](https://gowebexamples.com/)
+- [Fast youtube tutorial](https://www.youtube.com/watch?v=8uiZC0l4Ajw)
+- [How to use cobra package in go](https://www.digitalocean.com/community/tutorials/how-to-use-the-cobra-package-in-go)
+
+## Related
+
+- [Writing an interpreter in go](Areas/Books/writing_an_interpreter_in_go.md)
