@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 #[derive(Debug)]
 struct Part {
     start: (usize, usize),
@@ -64,6 +66,7 @@ fn main() {
     let input = std::fs::read_to_string("data/day03.txt").unwrap();
 
     println!("Part 1: {}", part_1(&input));
+    println!("Part 2: {}", part_2(&input));
 }
 
 fn part_1(graph: &str) -> usize {
@@ -81,16 +84,16 @@ fn is_valid(graph: &Vec<Vec<u8>>, part: &Part) -> bool {
     let (x, y) = part.start;
     let mut dirs: Vec<(Option<usize>, Option<usize>)> = Vec::new();
 
+    dirs.push((x.checked_sub(1), (y).checked_sub(1)));
+    dirs.push((Some(x), y.checked_sub(1)));
+    dirs.push((x.checked_add(1), y.checked_sub(1)));
     for i in 0..part.length {
-        dirs.push((x.checked_sub(1), (y+i).checked_sub(1)));
         dirs.push((x.checked_sub(1), Some(y+i)));
-        dirs.push((x.checked_sub(1), (y+i).checked_add(1)));
-        dirs.push((Some(x), (y+i).checked_sub(1)));
-        dirs.push((Some(x), (y+i).checked_add(1)));
-        dirs.push((x.checked_add(1), (y+i).checked_sub(1)));
         dirs.push((x.checked_add(1), Some(y+i)));
-        dirs.push((x.checked_add(1), (y+i).checked_add(1)));
     }
+    dirs.push((x.checked_sub(1), (y).checked_add(part.length)));
+    dirs.push((Some(x), (y).checked_add(part.length)));
+    dirs.push((x.checked_add(1), (y).checked_add(part.length)));
 
     dirs.iter().any(|d| {
         let (x, y) = d;
@@ -101,6 +104,38 @@ fn is_valid(graph: &Vec<Vec<u8>>, part: &Part) -> bool {
         return false;
     })
 }
+
+fn part_2(graph: &str) -> usize {
+    let graph = graph.lines().map(|l| l.as_bytes().to_vec()).collect::<Vec<Vec<u8>>>();
+    let mut gears = HashMap::new();
+    let parts = Parts::new(&graph);
+    parts.filter_map(|p| is_valid_2(&graph, &p, &mut gears)).sum()
+}
+
+fn is_valid_2(graph: &Vec<Vec<u8>>, part: &Part, gears: &mut HashMap<(usize, usize), i64>) -> Option<usize> {
+    let (x, y) = part.start;
+    let mut dirs: Vec<(Option<usize>, Option<usize>)> = Vec::new();
+
+    dirs.push((x.checked_sub(1), (y).checked_sub(1)));
+    dirs.push((Some(x), y.checked_sub(1)));
+    dirs.push((x.checked_add(1), y.checked_sub(1)));
+    for i in 0..part.length {
+        dirs.push((x.checked_sub(1), Some(y+i)));
+        dirs.push((x.checked_add(1), Some(y+i)));
+    }
+    dirs.push((x.checked_sub(1), (y).checked_add(part.length)));
+    dirs.push((Some(x), (y).checked_add(part.length)));
+    dirs.push((x.checked_add(1), (y).checked_add(part.length)));
+
+    let valid = dirs.iter().filter_map(|d| {
+        let (x, y) = d;
+        if let Some(v) = graph.get(x.unwrap()).and_then(|v| v.get(y.unwrap())) {
+            if v == b'*' && gears.contains_key((x, y)) && gears.
+    });
+
+    None
+}
+
 
 #[cfg(test)]
 mod tests {
